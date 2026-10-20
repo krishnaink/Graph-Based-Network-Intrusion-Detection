@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Graph-Based Network Intrusion Detection</title>
-<meta name="description" content="Detecting network intrusions with graph neural networks. CS 5814 project, Virginia Tech.">
+<meta name="description" content="Detecting network intrusions with graph neural networks and LLM-generated alert explanations. CS 5814 project, Virginia Tech.">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <style>
   :root{
@@ -52,7 +52,7 @@
   }
   .hero h1{ font-weight:700; letter-spacing:-.02em; max-width:18ch; }
   .hero h1 .accent{ color:var(--maroon); }
-  .hero .filler{ color:#8a8a96; font-style:italic; font-size:1.05rem; max-width:58ch; margin-top:.75rem; }
+  .hero .tagline{ color:#5f5f6b; font-size:1.1rem; max-width:58ch; margin-top:.75rem; }
   .hero-links{ display:flex; flex-wrap:wrap; gap:1.75rem; margin-top:2.25rem; }
   .hero-links a{
     text-decoration:none; font-weight:600; font-size:.93rem; color:var(--ink);
@@ -148,7 +148,7 @@
         <li class="nav-item"><a class="nav-link" href="#overview">Overview</a></li>
         <li class="nav-item"><a class="nav-link" href="#files">Documents</a></li>
         <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
-        <li class="nav-item"><a class="nav-link" href="https://github.com/krishnaink/Graph-Based-Network-Intrusion-Detection">Code</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://github.com/641-liu-shiyi/gnn-intrusion-detection">Code</a></li>
       </ul>
     </div>
   </div>
@@ -159,12 +159,12 @@
   <div class="container">
     <div class="hero-inner">
       <h1 class="display-5"><span class="accent">Graph-Based</span> Network Intrusion Detection</h1>
-      <p class="filler">Placeholder tagline — one line about the project goes here.</p>
+      <p class="tagline">Detecting network attacks with graph neural networks and LLM-generated alert explanations.</p>
       <div class="hero-links">
         <a href="documents/Proposal_Liu_Nair_Inukonda_Ravi.pdf">Project Proposal</a>
-        <a class="muted">Checkpoint Report</a>
+        <a href="documents/checkpoint1_report/Checkpoint_Proposal_Liu_Nair_Inukonda_Ravi.pdf">Checkpoint 1 Report</a>
         <a class="muted">Final Report</a>
-        <a href="https://github.com/krishnaink/Graph-Based-Network-Intrusion-Detection">Code Repository</a>
+        <a href="https://github.com/641-liu-shiyi/gnn-intrusion-detection">Code Repository</a>
       </div>
     </div>
   </div>
@@ -183,26 +183,20 @@
       </div>
       <div class="col-lg-9">
         <p class="lede">
-          Machine-learning intrusion detection systems typically score each network flow on its own,
-          as an independent feature vector. That view discards the network's communication structure,
-          which is exactly where many attacks become visible: a port scan, a DDoS flood, or lateral
-          movement is defined by a pattern spread across many hosts rather than by any single
-          connection.
+          Most machine-learning intrusion detection systems score each network flow on its own,
+          discarding the communication structure where many attacks become visible: a port scan or a
+          DDoS flood is a pattern spread across many hosts, not a single connection.
         </p>
         <p class="lede">
-          This project models hosts as nodes and flows as attributed edges, turning detection into an
-          edge classification task solved with a graph neural network. We build time-windowed flow
-          graphs from two standardized NetFlow datasets, NF-UNSW-NB15-v2 and NF-CSE-CIC-IDS2018-v2,
-          implement an edge-aware GNN based on E-GraphSAGE, and compare it against Random Forest,
-          XGBoost, and MLP baselines under identical, leakage-free temporal splits. Because both
-          datasets share a feature schema, we also train on one network and test on the other, a
-          cross-dataset setting the NIDS literature usually omits.
+          We model hosts as nodes and flows as attributed edges, and classify each flow with an
+          edge-aware GNN based on E-GraphSAGE. Graphs are built from 5,000-flow windows of
+          NF-UNSW-NB15-v2 and NF-CICIDS2018-v3, and the GNN is compared against Random Forest, XGBoost,
+          and MLP baselines, with an attention-based variant tested on rare attack classes. Because both
+          datasets share a feature schema, we also train on one network and test on the other.
         </p>
         <p class="lede">
-          A large language model layer then converts each flagged flow and its local graph context
-          into a human-readable alert, surfaced through an interactive dashboard. Evaluation reports
-          macro and per-class F1 rather than accuracy, reflecting the severe class imbalance inherent
-          to intrusion data.
+          An LLM layer turns each flagged flow and its graph context into a short, readable alert.
+          Evaluation uses macro and per-class F1 to account for severe class imbalance.
         </p>
 
         <div class="pillars">
@@ -212,11 +206,11 @@
           </div>
           <div class="pillar">
             <h5>Approach</h5>
-            <p>Edge-aware GNN classification over time-windowed host graphs, with tabular baselines as controls and an LLM layer for explanation.</p>
+            <p>Edge-aware GNN over host communication graphs, with mean and attention aggregation, tabular baselines, and LLM explanations.</p>
           </div>
           <div class="pillar">
             <h5>Impact</h5>
-            <p>Better recall on rare attack classes, interpretable alerts, and a measured answer on how detection transfers between networks.</p>
+            <p>Tests whether graph structure improves recall on rare attacks, produces readable alerts, and measures how detection transfers between networks.</p>
           </div>
         </div>
       </div>
@@ -255,7 +249,7 @@
             <h5>Checkpoint Report I</h5>
             <p>Interim results, milestones reached, and contributions from each member.</p>
           </div>
-          <span class="open off">Pending</span>
+          <a class="open" href="documents/checkpoint1_report/Checkpoint_Proposal_Liu_Nair_Inukonda_Ravi.pdf">Open →</a>
         </div>
 
         <div class="ledger-row">
@@ -379,7 +373,7 @@
 <footer>
   <div class="container d-flex flex-wrap justify-content-between gap-2">
     <div>CS 5814 Project · Virginia Tech</div>
-    <div><a href="https://github.com/krishnaink/Graph-Based-Network-Intrusion-Detection">GitHub Repository</a></div>
+    <div><a href="https://github.com/641-liu-shiyi/gnn-intrusion-detection">GitHub Repository</a></div>
   </div>
 </footer>
 
